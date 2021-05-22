@@ -41,6 +41,7 @@ const User: FC = () => {
   const { steps: completedSteps } = useSelector<RootStore, StepsStateI>(
     (state) => state.stepsState
   );
+  const isStepCompleted = completedSteps.includes(activeStep);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -58,7 +59,7 @@ const User: FC = () => {
         }}
         validationSchema={formValidationSchema}
         onSubmit={(values: FormValues) => {
-          dispatch(addStep(activeStep));
+          !isStepCompleted && dispatch(addStep(activeStep));
           dispatch(addUserInfo(values));
           history.push(urls.privacy);
           console.log(values);
