@@ -5,6 +5,7 @@ import { formSteps } from "../steps";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Form, Formik } from "formik";
+import { object, string } from "yup";
 
 interface FormValues {
   name: string;
@@ -12,6 +13,21 @@ interface FormValues {
   email: string;
   password: string;
 }
+
+const formValidationSchema = object().shape({
+  name: string()
+    .min(2, "Name should be at least 2 characters long")
+    .required("Name is required"),
+  email: string()
+    .email("Please provide a valid email")
+    .required("Email is invalid"),
+  password: string()
+    .matches(/^(?=.*[A-Z])/, "Should contain at least one uppercase character")
+    .matches(/^(?=.*[a-z])/, "Should contain at least one lowercase")
+    .matches(/^(?=.*[0-9])/, "Should contain at least one number")
+    .min(9, "Password should be at least 9 characters long")
+    .required("Password is required"),
+});
 
 const User: FC = () => {
   return (
@@ -24,23 +40,25 @@ const User: FC = () => {
           email: "",
           password: "",
         }}
+        validationSchema={formValidationSchema}
         onSubmit={(values: FormValues) => {
           console.log(values);
         }}
       >
-        {({ values, handleChange }) => (
-          <Form>
+        {({ values, touched, errors, handleBlur, handleChange }) => (
+          <Form autoComplete="off">
             <TextField
-              required
               name="name"
               variant="outlined"
               placeholder="Enter Your Name"
-              label="Name"
+              label="Name*"
               onChange={handleChange}
               value={values.name}
               margin="normal"
               fullWidth
-              type="text"
+              onBlur={handleBlur}
+              helperText={errors.name && touched.name ? errors.name : null}
+              error={!!(errors.name && touched.name)}
             />
 
             <TextField
@@ -55,29 +73,34 @@ const User: FC = () => {
             />
 
             <TextField
-              required
               variant="outlined"
               placeholder="Enter Your Email"
               name="email"
-              label="Email"
+              label="Email*"
               onChange={handleChange}
               value={values.email}
               margin="normal"
               fullWidth
               type="email"
+              onBlur={handleBlur}
+              helperText={errors.email && touched.email ? errors.email : null}
+              error={!!(errors.email && touched.email)}
             />
 
             <TextField
-              required
               variant="outlined"
               placeholder="Enter Your Password"
               name="password"
-              label="Password"
+              label="Password*"
               onChange={handleChange}
               value={values.password}
               margin="normal"
               fullWidth
-              type="password"
+              onBlur={handleBlur}
+              helperText={
+                errors.password && touched.password ? errors.password : null
+              }
+              error={!!(errors.password && touched.password)}
             />
 
             <Button
