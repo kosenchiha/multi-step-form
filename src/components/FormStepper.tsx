@@ -16,8 +16,8 @@ const FormStepper: FC<FormStepperProps> = ({
 }) => {
   return (
     <Stepper activeStep={activeStep} alternativeLabel>
-      {steps.map((label) => (
-        <Step key={label} completed={completedSteps.includes(activeStep)}>
+      {steps.map((label, index) => (
+        <Step key={label} completed={completedSteps.includes(index)}>
           <StepLabel>{label}</StepLabel>
         </Step>
       ))}
