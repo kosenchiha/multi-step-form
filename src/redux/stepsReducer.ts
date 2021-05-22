@@ -4,7 +4,7 @@ export interface StepsStateI {
   steps: number[];
 }
 
-const initialState = { steps: [0] };
+const initialState = { steps: [] };
 
 export const stepsReducer = (
   state: StepsStateI = initialState,

@@ -6,6 +6,13 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Form, Formik } from "formik";
 import { object, string } from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { addStep } from "../redux/stepsActions";
+import { addUserInfo } from "../redux/userActions";
+import { useHistory } from "react-router-dom";
+import { urls } from "../routes/urls";
+import { RootStore } from "../redux/store";
+import { StepsStateI } from "../redux/stepsReducer";
 
 interface FormValues {
   name: string;
@@ -18,9 +25,7 @@ const formValidationSchema = object().shape({
   name: string()
     .min(2, "Name should be at least 2 characters long")
     .required("Name is required"),
-  email: string()
-    .email("Please provide a valid email")
-    .required("Email is invalid"),
+  email: string().email("Email is invalid").required("Email is required"),
   password: string()
     .matches(/^(?=.*[A-Z])/, "Should contain at least one uppercase character")
     .matches(/^(?=.*[a-z])/, "Should contain at least one lowercase")
@@ -30,9 +35,20 @@ const formValidationSchema = object().shape({
 });
 
 const User: FC = () => {
+  const activeStep = 0;
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { steps: completedSteps } = useSelector<RootStore, StepsStateI>(
+    (state) => state.stepsState
+  );
+
   return (
     <Container component="main" maxWidth="xs">
-      <FormStepper activeStep={0} completedSteps={[]} steps={formSteps} />
+      <FormStepper
+        activeStep={activeStep}
+        completedSteps={completedSteps}
+        steps={formSteps}
+      />
       <Formik
         initialValues={{
           name: "",
@@ -42,6 +58,9 @@ const User: FC = () => {
         }}
         validationSchema={formValidationSchema}
         onSubmit={(values: FormValues) => {
+          dispatch(addStep(activeStep));
+          dispatch(addUserInfo(values));
+          history.push(urls.privacy);
           console.log(values);
         }}
       >
@@ -111,8 +130,6 @@ const User: FC = () => {
             >
               Submit
             </Button>
-
-            <pre>{JSON.stringify(values, null, 2)}</pre>
           </Form>
         )}
       </Formik>
