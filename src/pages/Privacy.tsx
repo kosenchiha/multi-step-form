@@ -13,6 +13,7 @@ import { Form, Formik } from "formik";
 import { addStep } from "../redux/stepsActions";
 import { addUserConsent } from "../redux/userActions";
 import { urls } from "../routes/urls";
+import { UserStateI } from "../redux/userReducer";
 
 const Privacy: FC = () => {
   const activeStep = 1;
@@ -20,6 +21,9 @@ const Privacy: FC = () => {
   const history = useHistory();
   const { steps: completedSteps } = useSelector<RootStore, StepsStateI>(
     (state) => state.stepsState
+  );
+  const { userConsent } = useSelector<RootStore, UserStateI>(
+    (state) => state.userState
   );
   const isStepCompleted = completedSteps.includes(activeStep);
 
@@ -32,7 +36,7 @@ const Privacy: FC = () => {
       />
 
       <Formik
-        initialValues={{ email: false, phone: false }}
+        initialValues={userConsent}
         onSubmit={(values) => {
           !isStepCompleted && dispatch(addStep(activeStep));
           dispatch(addUserConsent(values));

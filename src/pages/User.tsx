@@ -8,11 +8,12 @@ import { Form, Formik } from "formik";
 import { object, string } from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { addStep } from "../redux/stepsActions";
-import { addUserInfo } from "../redux/userActions";
+import { addUserInfo, UserInfoI } from "../redux/userActions";
 import { useHistory } from "react-router-dom";
 import { urls } from "../routes/urls";
 import { RootStore } from "../redux/store";
 import { StepsStateI } from "../redux/stepsReducer";
+import { UserStateI } from "../redux/userReducer";
 
 interface FormValues {
   name: string;
@@ -41,6 +42,10 @@ const User: FC = () => {
   const { steps: completedSteps } = useSelector<RootStore, StepsStateI>(
     (state) => state.stepsState
   );
+  const { userInfo } = useSelector<RootStore, UserStateI>(
+    (state) => state.userState
+  );
+
   const isStepCompleted = completedSteps.includes(activeStep);
 
   return (
@@ -51,18 +56,12 @@ const User: FC = () => {
         steps={formSteps}
       />
       <Formik
-        initialValues={{
-          name: "",
-          role: "",
-          email: "",
-          password: "",
-        }}
+        initialValues={userInfo}
         validationSchema={formValidationSchema}
         onSubmit={(values: FormValues) => {
           !isStepCompleted && dispatch(addStep(activeStep));
           dispatch(addUserInfo(values));
           history.push(urls.privacy);
-          console.log(values);
         }}
       >
         {({ values, touched, errors, handleBlur, handleChange }) => (
