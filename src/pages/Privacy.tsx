@@ -6,28 +6,23 @@ import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import FormStepper from "../components/FormStepper";
-import { FormStatus, FormProgressStateI } from "../redux/formProgressReducer";
-import { RootStore } from "../redux/store";
+import { FormStatus } from "../redux/formProgressReducer";
 import { formSteps } from "../steps";
 import { Form, Formik } from "formik";
 import { completeStep } from "../redux/formProgressActions";
 import { addUserConsent } from "../redux/userActions";
 import { urls } from "../routes/urls";
-import { UserStateI } from "../redux/userReducer";
 import Navigation from "../components/Navigation";
 import { RestartBtn } from "../components/RestartBtn";
+import { selectUserConcent } from "../redux/userSelectors";
+import { selectFormProgress } from "../redux/formProgressSelectors";
 
 const Privacy: FC = () => {
   const activeStep = 1;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { completedSteps, formStatus } = useSelector<
-    RootStore,
-    FormProgressStateI
-  >((state) => state.formProgressState);
-  const { userConsent } = useSelector<RootStore, UserStateI>(
-    (state) => state.userState
-  );
+  const { completedSteps, formStatus } = useSelector(selectFormProgress);
+  const userConsent = useSelector(selectUserConcent);
   const isStepCompleted = completedSteps.includes(activeStep);
   const isFormSubmitted = formStatus === FormStatus.Submitted;
 

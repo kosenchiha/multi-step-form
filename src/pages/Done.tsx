@@ -15,17 +15,15 @@ import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import Grid from "@material-ui/core/Grid";
 import { RestartBtn } from "../components/RestartBtn";
 import { Box } from "@material-ui/core";
+import { selectFormProgress } from "../redux/formProgressSelectors";
+import { selectUserState } from "../redux/userSelectors";
 
 const Done: FC = () => {
   const activeStep = 2;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { completedSteps, formStatus } = useSelector<
-    RootStore,
-    FormProgressStateI
-  >((state) => state.formProgressState);
-  const { userState } = useSelector<RootStore, RootStore>((state) => state);
-
+  const { completedSteps, formStatus } = useSelector(selectFormProgress);
+  const userState = useSelector(selectUserState);
   const isFormCompleted = formStatus === FormStatus.Submitted;
 
   useEffect(() => {

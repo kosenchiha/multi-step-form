@@ -14,19 +14,15 @@ import { formSteps } from "../steps";
 import UserForm from "../components/UserForm";
 import { FormValues } from "../components/UserForm";
 import { RestartBtn } from "../components/RestartBtn";
+import { selectUserInfo } from "../redux/userSelectors";
+import { selectFormProgress } from "../redux/formProgressSelectors";
 
 const User: FC = () => {
   const activeStep = 0;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { completedSteps, formStatus } = useSelector<
-    RootStore,
-    FormProgressStateI
-  >((state) => state.formProgressState);
-  const { userInfo } = useSelector<RootStore, UserStateI>(
-    (state) => state.userState
-  );
-
+  const { completedSteps, formStatus } = useSelector(selectFormProgress);
+  const userInfo = useSelector(selectUserInfo);
   const isStepCompleted = completedSteps.includes(activeStep);
   const isFormSubmitted = formStatus === FormStatus.Submitted;
 
