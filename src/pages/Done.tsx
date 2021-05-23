@@ -13,6 +13,7 @@ import DoneOutlineSharpIcon from "@material-ui/icons/DoneOutlineSharp";
 import Typography from "@material-ui/core/Typography";
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import Grid from "@material-ui/core/Grid";
+import RestartBtn from "../components/RestartBtn";
 
 const Done: FC = () => {
   const activeStep = 2;
@@ -66,6 +67,7 @@ const Done: FC = () => {
           </Typography>
         </Grid>
       </Grid>
+      {formStatus === FormStatus.Submitted && <RestartBtn />}
     </Container>
   );
 };

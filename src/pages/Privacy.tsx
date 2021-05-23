@@ -15,6 +15,7 @@ import { addUserConsent } from "../redux/userActions";
 import { urls } from "../routes/urls";
 import { UserStateI } from "../redux/userReducer";
 import Navigation from "../components/Navigation";
+import RestartBtn from "../components/RestartBtn";
 
 const Privacy: FC = () => {
   const activeStep = 1;
@@ -94,6 +95,7 @@ const Privacy: FC = () => {
           </Form>
         )}
       </Formik>
+      {formStatus === FormStatus.Submitted && <RestartBtn />}
     </Container>
   );
 };

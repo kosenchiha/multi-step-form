@@ -1,4 +1,9 @@
-import { StepsAction, ADD_STEP, SUBMIT_FORM } from "./stepsActions";
+import {
+  StepsAction,
+  ADD_STEP,
+  SUBMIT_FORM,
+  RESET_STEPS_STATE,
+} from "./stepsActions";
 
 export enum FormStatus {
   Initial = "initial",
@@ -21,6 +26,8 @@ export const stepsReducer = (
       return { ...state, steps: [...state.steps, action.step] };
     case SUBMIT_FORM:
       return { ...state, formStatus: FormStatus.Submitted };
+    case RESET_STEPS_STATE:
+      return { ...initialState };
     default:
       return state;
   }

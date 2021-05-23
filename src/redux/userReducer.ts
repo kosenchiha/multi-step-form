@@ -4,6 +4,7 @@ import {
   ADD_USER_INFO,
   UserConsentI,
   UserInfoI,
+  RESET_USER_STATE,
 } from "./userActions";
 
 export interface UserStateI {
@@ -12,7 +13,7 @@ export interface UserStateI {
 }
 
 const initialState = {
-  userInfo: { name: "", role: "", email: "", password: "" },
+  userInfo: { name: "", role: "", email: "", password: "Adffff12345" },
   userConsent: { email: false, phone: false },
 };
 
@@ -25,6 +26,8 @@ export const userReducer = (
       return { ...state, userInfo: action.userInfo };
     case ADD_USER_CONSENT:
       return { ...state, userConsent: action.userConsent };
+    case RESET_USER_STATE:
+      return { ...initialState };
     default:
       return state;
   }

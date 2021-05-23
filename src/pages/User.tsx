@@ -14,6 +14,7 @@ import Navigation from "../components/Navigation";
 import { formSteps } from "../steps";
 import UserForm from "../components/UserForm";
 import { FormValues } from "../components/UserForm";
+import RestartBtn from "../components/RestartBtn";
 
 const User: FC = () => {
   const activeStep = 0;
@@ -48,6 +49,7 @@ const User: FC = () => {
         onFormSubmit={handleUserFormSubmit}
         isFormSubmitted={formStatus === FormStatus.Submitted}
       />
+      {formStatus === FormStatus.Submitted && <RestartBtn />}
     </Container>
   );
 };
