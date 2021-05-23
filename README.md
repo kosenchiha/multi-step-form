@@ -53,16 +53,16 @@ From the repo:
 
 First page: user is on landing page and they hit submit without filling in the form (screen 1) <br />
 
-![landing page](preview-imgs/landing.jpg)<br />
+<img src="preview-imgs/landing.jpg" alt="landing page" width="400"/>
+
+<br />
 
 User consent page (screen 2)<br />
-
-![Second step of the form](preview-imgs/consent.jpg)<br />
+<img src="preview-imgs/consent.jpg" alt="Second step of the form" width="400"/>
+<br />
 
 Success page (screen 3)<br />
-
-![Second step of the form](preview-imgs/success.jpg)<br />
+<img src="preview-imgs/success.jpg" alt="Second step of the form" width="400"/><br />
 
 User consent page- revisited after form submission (screen 2)<br />
-
-![Second step of the form](preview-imgs/consent-revisited.jpg)<br />
+<img src="preview-imgs/consent-revisited.jpg" alt="Second step of the form" width="400"/><br />
