@@ -1,7 +1,5 @@
-import { Container } from "@material-ui/core";
 import { FC } from "react";
-import FormStepper from "../components/FormStepper";
-import { formSteps } from "../steps";
+import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Form, Formik } from "formik";
@@ -14,6 +12,9 @@ import { urls } from "../routes/urls";
 import { RootStore } from "../redux/store";
 import { StepsStateI } from "../redux/stepsReducer";
 import { UserStateI } from "../redux/userReducer";
+import FormStepper from "../components/FormStepper";
+import Navigation from "../components/Navigation";
+import { formSteps } from "../steps";
 
 interface FormValues {
   name: string;
@@ -55,6 +56,7 @@ const User: FC = () => {
         completedSteps={completedSteps}
         steps={formSteps}
       />
+      <Navigation isStepCompleted={isStepCompleted} goNextTo={urls.privacy} />
       <Formik
         initialValues={userInfo}
         validationSchema={formValidationSchema}

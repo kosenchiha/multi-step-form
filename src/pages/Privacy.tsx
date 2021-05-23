@@ -14,7 +14,7 @@ import { addStep } from "../redux/stepsActions";
 import { addUserConsent } from "../redux/userActions";
 import { urls } from "../routes/urls";
 import { UserStateI } from "../redux/userReducer";
-import ChevronLeft from "@material-ui/icons/ChevronLeft";
+import Navigation from "../components/Navigation";
 
 const Privacy: FC = () => {
   const activeStep = 1;
@@ -35,6 +35,11 @@ const Privacy: FC = () => {
         completedSteps={completedSteps}
         steps={formSteps}
       />
+      <Navigation
+        isStepCompleted={isStepCompleted}
+        goNextTo={urls.done}
+        goBackTo={urls.user}
+      />
 
       <Formik
         initialValues={userConsent}
@@ -46,13 +51,6 @@ const Privacy: FC = () => {
       >
         {({ values, handleChange }) => (
           <Form>
-            <Button
-              size="large"
-              onClick={() => history.push(urls.user)}
-              startIcon={<ChevronLeft />}
-            >
-              Back
-            </Button>
             <Box paddingY={2}>
               <FormControlLabel
                 control={
