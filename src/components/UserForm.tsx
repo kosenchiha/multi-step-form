@@ -103,6 +103,7 @@ const UserForm: FC<UserFormProps> = ({
             }
             error={!!(errors.password && touched.password)}
             disabled={isFormSubmitted}
+            type="password"
           />
 
           {!isFormSubmitted && (
