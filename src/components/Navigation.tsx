@@ -45,8 +45,7 @@ const Navigation: FC<NavigationProps> = ({
       {isStepCompleted && (
         <Box marginTop={2}>
           <Typography variant="body2" align="center" color="primary">
-            You've already completed this step. You can proceed next or resubmit
-            your data
+            You've already completed this step.
           </Typography>
         </Box>
       )}

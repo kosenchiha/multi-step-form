@@ -4,8 +4,8 @@ import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import FormStepper from "../components/FormStepper";
-import { addStep } from "../redux/stepsActions";
-import { StepsStateI } from "../redux/stepsReducer";
+import { addStep, submitForm } from "../redux/stepsActions";
+import { FormStatus, StepsStateI } from "../redux/stepsReducer";
 import { RootStore } from "../redux/store";
 import { urls } from "../routes/urls";
 import { formSteps } from "../steps";
@@ -18,9 +18,10 @@ const Done: FC = () => {
   const activeStep = 2;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { steps: completedSteps } = useSelector<RootStore, StepsStateI>(
-    (state) => state.stepsState
-  );
+  const { steps: completedSteps, formStatus } = useSelector<
+    RootStore,
+    StepsStateI
+  >((state) => state.stepsState);
   const { userState } = useSelector<RootStore, RootStore>((state) => state);
 
   useEffect(() => {
@@ -30,7 +31,8 @@ const Done: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (completedSteps.length === 3) {
+    if (completedSteps.length === 3 && formStatus !== FormStatus.Submitted) {
+      dispatch(submitForm());
       console.log(userState);
     }
   }, [completedSteps.length, userState]);

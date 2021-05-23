@@ -6,7 +6,7 @@ import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import FormStepper from "../components/FormStepper";
-import { StepsStateI } from "../redux/stepsReducer";
+import { FormStatus, StepsStateI } from "../redux/stepsReducer";
 import { RootStore } from "../redux/store";
 import { formSteps } from "../steps";
 import { Form, Formik } from "formik";
@@ -20,14 +20,15 @@ const Privacy: FC = () => {
   const activeStep = 1;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { steps: completedSteps } = useSelector<RootStore, StepsStateI>(
-    (state) => state.stepsState
-  );
+  const { steps: completedSteps, formStatus } = useSelector<
+    RootStore,
+    StepsStateI
+  >((state) => state.stepsState);
   const { userConsent } = useSelector<RootStore, UserStateI>(
     (state) => state.userState
   );
   const isStepCompleted = completedSteps.includes(activeStep);
-
+  const isFormSubmited = formStatus === FormStatus.Submitted;
   return (
     <Container component="main" maxWidth="xs">
       <FormStepper
@@ -55,6 +56,7 @@ const Privacy: FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    disabled={isFormSubmited}
                     name="email"
                     color="primary"
                     onChange={handleChange}
@@ -68,6 +70,7 @@ const Privacy: FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    disabled={isFormSubmited}
                     name="phone"
                     color="primary"
                     onChange={handleChange}
@@ -78,14 +81,16 @@ const Privacy: FC = () => {
               />
             </Box>
 
-            <Button
-              color="primary"
-              variant="contained"
-              size="large"
-              type="submit"
-            >
-              Submit
-            </Button>
+            {!isFormSubmited && (
+              <Button
+                color="primary"
+                variant="contained"
+                size="large"
+                type="submit"
+              >
+                Submit
+              </Button>
+            )}
           </Form>
         )}
       </Formik>
