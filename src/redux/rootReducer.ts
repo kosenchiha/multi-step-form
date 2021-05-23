@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import { stepsReducer } from "./stepsReducer";
+import { formProgressReducer } from "./formProgressReducer";
 import { userReducer } from "./userReducer";
 
 const RootReducer = combineReducers({
-  stepsState: stepsReducer,
+  formProgressState: formProgressReducer,
   userState: userReducer,
 });
 

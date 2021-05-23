@@ -1,25 +1,71 @@
-import { StepsAction, ADD_STEP } from "../redux/stepsActions";
-import { stepsReducer, StepsStateI } from "../redux/stepsReducer";
+import {
+  FormProgressAction,
+  COMPLETE_STEP,
+  SUBMIT_FORM,
+  RESET_FORM_PROGRESS_STATE,
+} from "../redux/formProgressActions";
+import {
+  formProgressReducer,
+  FormProgressStateI,
+  FormStatus,
+} from "../redux/formProgressReducer";
 
-const initialState: StepsStateI = {
-  steps: [2],
+const initialState: FormProgressStateI = {
+  completedSteps: [2],
+  formStatus: FormStatus.Initial,
 };
 
-describe("stepsReducer", () => {
+describe("formProgressReducer", () => {
   it("should return the initial state", () => {
-    expect(stepsReducer(initialState, {} as any)).toEqual(initialState);
+    expect(formProgressReducer(initialState, {} as any)).toEqual(initialState);
   });
 
-  it("should handle ADD_STEP", () => {
-    const action: StepsAction = {
-      type: ADD_STEP,
+  it("should handle COMPLETE_STEP", () => {
+    const action: FormProgressAction = {
+      type: COMPLETE_STEP,
       step: 1,
     };
 
-    const state: StepsStateI = {
-      steps: [],
+    const state: FormProgressStateI = {
+      completedSteps: [],
+      formStatus: FormStatus.Initial,
     };
 
-    expect(stepsReducer(state, action)).toEqual({ steps: [1] });
+    expect(formProgressReducer(state, action)).toEqual({
+      completedSteps: [1],
+      formStatus: "initial",
+    });
+  });
+
+  it("should handle SUBMIT_FORM", () => {
+    const action: FormProgressAction = {
+      type: SUBMIT_FORM,
+    };
+
+    const state: FormProgressStateI = {
+      completedSteps: [0, 1, 2],
+      formStatus: FormStatus.Initial,
+    };
+
+    expect(formProgressReducer(state, action)).toEqual({
+      completedSteps: [0, 1, 2],
+      formStatus: "submitted",
+    });
+  });
+
+  it("should handle RESET_FORM_PROGRESS_STATE", () => {
+    const action: FormProgressAction = {
+      type: RESET_FORM_PROGRESS_STATE,
+    };
+
+    const state: FormProgressStateI = {
+      completedSteps: [0, 1, 2],
+      formStatus: FormStatus.Submitted,
+    };
+
+    expect(formProgressReducer(state, action)).toEqual({
+      completedSteps: [],
+      formStatus: "initial",
+    });
   });
 });

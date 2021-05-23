@@ -4,11 +4,11 @@ import Grid from "@material-ui/core/Grid";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { resetStepState } from "../redux/stepsActions";
+import { resetStepState } from "../redux/formProgressActions";
 import { resetUserState } from "../redux/userActions";
 import { urls } from "../routes/urls";
 
-const RestartBtn: FC = () => {
+export const RestartBtn: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -31,5 +31,3 @@ const RestartBtn: FC = () => {
     </Grid>
   );
 };
-
-export default RestartBtn;

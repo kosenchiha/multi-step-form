@@ -6,30 +6,31 @@ import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import FormStepper from "../components/FormStepper";
-import { FormStatus, StepsStateI } from "../redux/stepsReducer";
+import { FormStatus, FormProgressStateI } from "../redux/formProgressReducer";
 import { RootStore } from "../redux/store";
 import { formSteps } from "../steps";
 import { Form, Formik } from "formik";
-import { addStep } from "../redux/stepsActions";
+import { completeStep } from "../redux/formProgressActions";
 import { addUserConsent } from "../redux/userActions";
 import { urls } from "../routes/urls";
 import { UserStateI } from "../redux/userReducer";
 import Navigation from "../components/Navigation";
-import RestartBtn from "../components/RestartBtn";
+import { RestartBtn } from "../components/RestartBtn";
 
 const Privacy: FC = () => {
   const activeStep = 1;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { steps: completedSteps, formStatus } = useSelector<
+  const { completedSteps, formStatus } = useSelector<
     RootStore,
-    StepsStateI
-  >((state) => state.stepsState);
+    FormProgressStateI
+  >((state) => state.formProgressState);
   const { userConsent } = useSelector<RootStore, UserStateI>(
     (state) => state.userState
   );
   const isStepCompleted = completedSteps.includes(activeStep);
-  const isFormSubmited = formStatus === FormStatus.Submitted;
+  const isFormSubmitted = formStatus === FormStatus.Submitted;
+
   return (
     <Container component="main" maxWidth="xs">
       <FormStepper
@@ -46,7 +47,7 @@ const Privacy: FC = () => {
       <Formik
         initialValues={userConsent}
         onSubmit={(values) => {
-          !isStepCompleted && dispatch(addStep(activeStep));
+          !isStepCompleted && dispatch(completeStep(activeStep));
           dispatch(addUserConsent(values));
           history.push(urls.done);
         }}
@@ -57,7 +58,7 @@ const Privacy: FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    disabled={isFormSubmited}
+                    disabled={isFormSubmitted}
                     name="email"
                     color="primary"
                     onChange={handleChange}
@@ -71,7 +72,7 @@ const Privacy: FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    disabled={isFormSubmited}
+                    disabled={isFormSubmitted}
                     name="phone"
                     color="primary"
                     onChange={handleChange}
@@ -82,7 +83,7 @@ const Privacy: FC = () => {
               />
             </Box>
 
-            {!isFormSubmited && (
+            {!isFormSubmitted && (
               <Button
                 color="primary"
                 variant="contained"

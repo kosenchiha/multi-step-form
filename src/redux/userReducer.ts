@@ -13,7 +13,7 @@ export interface UserStateI {
 }
 
 const initialState = {
-  userInfo: { name: "", role: "", email: "", password: "Adffff12345" },
+  userInfo: { name: "", role: "", email: "", password: "" },
   userConsent: { email: false, phone: false },
 };
 

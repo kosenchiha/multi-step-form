@@ -2,6 +2,7 @@ import {
   UserAction,
   ADD_USER_CONSENT,
   ADD_USER_INFO,
+  RESET_USER_STATE,
 } from "../redux/userActions";
 import { userReducer, UserStateI } from "../redux/userReducer";
 
@@ -12,7 +13,7 @@ const initialState: UserStateI = {
 
 describe("userReducer", () => {
   it("should return the initial state", () => {
-    expect(userReducer(undefined, {} as any)).toEqual(initialState);
+    expect(userReducer(initialState, {} as any)).toEqual(initialState);
   });
 
   it("should handle ADD_USER_INFO", () => {
@@ -62,5 +63,37 @@ describe("userReducer", () => {
       email: true,
       phone: false,
     });
+  });
+
+  it("should handle RESET_USER_STATE", () => {
+    const action: UserAction = {
+      type: RESET_USER_STATE,
+    };
+
+    const state: UserStateI = {
+      userInfo: {
+        name: "Test",
+        role: "",
+        email: "t@s.co",
+        password: "Password1",
+      },
+      userConsent: { email: true, phone: true },
+    };
+
+    expect(userReducer(state, action)).toEqual(
+      initialState
+      //   {
+      //   userInfo: {
+      //     name: "",
+      //     role: "",
+      //     email: "",
+      //     password: "",
+      //   },
+      //   userConsent: {
+      //     email: false,
+      //     phone: false,
+      //   },
+      // }
+    );
   });
 });
