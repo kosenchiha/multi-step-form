@@ -1,4 +1,4 @@
-import { Container } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,10 @@ import { StepsStateI } from "../redux/stepsReducer";
 import { RootStore } from "../redux/store";
 import { urls } from "../routes/urls";
 import { formSteps } from "../steps";
+import DoneOutlineSharpIcon from "@material-ui/icons/DoneOutlineSharp";
+import Typography from "@material-ui/core/Typography";
+import ChevronLeft from "@material-ui/icons/ChevronLeft";
+import Grid from "@material-ui/core/Grid";
 
 const Done: FC = () => {
   const activeStep = 2;
@@ -38,10 +42,28 @@ const Done: FC = () => {
         completedSteps={completedSteps}
         steps={formSteps}
       />
-      <Button size="large" onClick={() => history.push(urls.privacy)}>
-        Back
-      </Button>
-      <p>Done!</p>
+      <Grid container spacing={4} direction="column">
+        <Grid item>
+          <Button
+            size="large"
+            startIcon={<ChevronLeft />}
+            onClick={() => history.push(urls.privacy)}
+          >
+            Back
+          </Button>
+        </Grid>
+        <Grid item>
+          <Typography align="center">
+            <DoneOutlineSharpIcon fontSize="large" color="primary" />
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography align="center" variant="h6">
+            Please, verify your email address, you should have received an email
+            from us already!
+          </Typography>
+        </Grid>
+      </Grid>
     </Container>
   );
 };

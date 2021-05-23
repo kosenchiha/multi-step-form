@@ -14,6 +14,7 @@ import { addStep } from "../redux/stepsActions";
 import { addUserConsent } from "../redux/userActions";
 import { urls } from "../routes/urls";
 import { UserStateI } from "../redux/userReducer";
+import ChevronLeft from "@material-ui/icons/ChevronLeft";
 
 const Privacy: FC = () => {
   const activeStep = 1;
@@ -45,7 +46,11 @@ const Privacy: FC = () => {
       >
         {({ values, handleChange }) => (
           <Form>
-            <Button size="large" onClick={() => history.push(urls.user)}>
+            <Button
+              size="large"
+              onClick={() => history.push(urls.user)}
+              startIcon={<ChevronLeft />}
+            >
               Back
             </Button>
             <Box paddingY={2}>
