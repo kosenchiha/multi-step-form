@@ -8,7 +8,7 @@ The app consists of 3 pages, which have different Urls. User can't proceed to th
 
 ## Live demo version
 
-[Live version of the app can be found on Netlify](https://blissful-austin-54208c.netlify.app/).
+[Live version of the app can be found on Netlify](https://nervous-colden-1b4207.netlify.app/).
 
 ## Running The Project
 
